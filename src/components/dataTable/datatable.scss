@@ -1,0 +1,68 @@
+.datatable{
+    width: 98%;
+    flex: 6;
+    height: 85%;
+    padding: 8px;
+
+    .data__table__title{
+        widows: 100%;
+        font-size: 24px;
+        color: gray;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .link{
+            text-decoration: none;
+            color: green;
+            font-size: 16px;
+            font-weight: 400;
+            border: 1px solid green;
+            border-radius: 5px;
+            padding: 5px;
+        }
+    }
+
+
+    .cellWithRole{
+        padding: 5px;
+        border-radius: 5px;
+
+        &.admin{
+            background-color: #13c05e;
+        }
+
+        &.basic{
+            background-color: #de969649;
+        }
+        &.editor{
+            background-color: #de964b;
+        }
+    }
+
+    .cellAction{
+        display: flex;
+        align-items: center;
+        gap: 15px;
+
+        .editButton{
+            padding: 2px 5px;
+            border-radius: 5px;
+            border: 1px dotted blue;
+            color: darkblue;
+            cursor: pointer;
+        }
+
+        .deleteButton{
+            padding: 2px 5px;
+            border-radius: 5px;
+            color: crimson;
+            cursor: pointer;
+            border: 1px dotted rgba(242, 35, 35, 0.777);
+        
+        }
+    }
+
+
+}
