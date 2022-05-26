@@ -5,18 +5,25 @@ import * as Yup from 'yup';
 import {
     Box,
     Button,
+    CircularProgress,
     Container,
     TextField,
+    Typography,
 } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { userLogin } from '../../redux/userSlice';
 import './login.scss'
 
 const Login = () => {
+    const { error, loading } = useSelector(state => state.user);
+    const dispatch = useDispatch()
     const navigate = useNavigate();
+
 
     const formik = useFormik({
         initialValues: {
-            email: '',
-            password: '',
+            email: 'test@gmail.com',
+            password: '123456',
         },
         validationSchema: Yup.object({
             email: Yup
@@ -34,14 +41,38 @@ const Login = () => {
                     'Password is required'),
         }),
         onSubmit: (values) => {
-            console.log(values);
+            dispatch(userLogin(values))
+                .unwrap()
+                .then(({ data }) => {
+                    if (data.token) {
+                        localStorage.setItem('token', data.token)
+                        navigate('/')
+                    }
+
+                })
+                .catch(err => console.log(err))
         }
     });
     return (
         <div className='form'>
-            <Container maxWidth="xs" className='container' >
+            {loading ? <CircularProgress /> : <Container maxWidth="xs" className='container' >
                 <form onSubmit={formik.handleSubmit}>
-
+                    <Box sx={{ my: 3, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <Typography
+                            color="textSecondary"
+                            variant="h5"
+                        >
+                            Sign In to your account
+                        </Typography>
+                    </Box>
+                    {error?.message && <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', }}>
+                        <Typography
+                            color="red"
+                            variant="h6"
+                        >
+                            {error?.message}
+                        </Typography>
+                    </Box>}
                     <TextField
                         error={Boolean(formik.touched.email && formik.errors.email)}
                         fullWidth
@@ -71,7 +102,7 @@ const Login = () => {
                     <Box sx={{ py: 2 }}>
                         <Button
                             color="primary"
-                            disabled={formik.isSubmitting}
+                            disabled={loading}
                             fullWidth
                             size="large"
                             type="submit"
@@ -81,7 +112,7 @@ const Login = () => {
                         </Button>
                     </Box>
                 </form>
-            </Container>
+            </Container>}
         </div>
     )
 }

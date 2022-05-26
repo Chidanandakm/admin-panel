@@ -1,35 +1,52 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useFormik } from 'formik';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import * as Yup from 'yup';
 import {
     Box,
     Button,
     CircularProgress,
     Container,
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Select,
     TextField,
     Typography
 } from '@mui/material';
-
 import AppWrapper from '../../wrapper/AppWrapper'
 import './new.scss'
 import { useDispatch, useSelector } from 'react-redux';
-import { createUser } from '../../redux/userSlice';
+import { getUser, updateUser } from '../../redux/userSlice';
 
-const NewUser = () => {
-    const { loading } = useSelector(state => state.user)
+const UpdateUser = () => {
+    const { loading } = useSelector(state => state.user);
+    const [errorMessage, setErrorMessage] = useState('');
+
+    const { id } = useParams()
+    const location = useLocation()
     const dispatch = useDispatch()
     const navigate = useNavigate();
 
-    const [errorMessage, setErrorMessage] = useState('');
+    const [initialData, setInitialData] = useState({
+        name: '',
+        email: '',
+        role: '',
+    });
 
+    useEffect(() => {
+        if (id) {
+            dispatch(getUser(id))
+                .unwrap()
+                .then(({ data }) => {
+                    setInitialData({ id: data._id, name: data.name, email: data.email, role: data.role })
+                })
+        }
+    }, [])
 
     const formik = useFormik({
-        initialValues: {
-            name: '',
-            email: '',
-            password: '',
-        },
+        initialValues: initialData,
+        enableReinitialize: true,
         validationSchema: Yup.object({
             email: Yup
                 .string()
@@ -43,22 +60,24 @@ const NewUser = () => {
                 .max(255)
                 .required(
                     'Name is required'),
-            password: Yup
+            role: Yup
                 .string()
-                .min(6, 'Password must be at least 6 characters')
                 .max(255)
                 .required(
-                    'Password is required'),
+                    'Role is required'),
+
         }),
         onSubmit: (values) => {
-            dispatch(createUser(values))
+            dispatch(updateUser(values))
                 .unwrap()
-                .then(({ data }) => {
-                    data.token && navigate('/users')
+                .then((data) => {
+                    if (data.status === 200) {
+                        navigate('/users')
+                    }
+
                 })
-                .catch(({ data }) => {
-                    setErrorMessage(data.message)
-                })
+                .catch(({ data }) => setErrorMessage(data.message))
+
         }
     });
     return (
@@ -70,7 +89,7 @@ const NewUser = () => {
                             color="textPrimary"
                             variant="h4"
                         >
-                            Create a User
+                            Update User
                         </Typography>
                     </Box>
                     {errorMessage && <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', }}>
@@ -82,16 +101,16 @@ const NewUser = () => {
                         </Typography>                        </Box>}
 
                     <TextField
-                        error={Boolean(formik.touched.name && formik.errors.name)}
+                        error={Boolean(formik.errors.name && formik.touched.name)}
                         fullWidth
-                        helperText={formik.touched.name && formik.errors.name}
+                        helperText={formik.errors.name && formik.touched.name && formik.errors.name}
                         label="Name"
                         margin="normal"
                         name="name"
                         onBlur={formik.handleBlur}
                         onChange={formik.handleChange}
                         type="text"
-                        value={formik.values.name}
+                        value={formik.values.name || ''}
                         variant="outlined"
                     />
                     <TextField
@@ -104,33 +123,40 @@ const NewUser = () => {
                         onBlur={formik.handleBlur}
                         onChange={formik.handleChange}
                         type="email"
-                        value={formik.values.email}
-                        variant="outlined"
-                    />
-                    <TextField
-                        error={Boolean(formik.touched.password && formik.errors.password)}
-                        fullWidth
-                        helperText={formik.touched.password && formik.errors.password}
-                        label="Password"
-                        margin="normal"
-                        name="password"
-                        onBlur={formik.handleBlur}
-                        onChange={formik.handleChange}
-                        type="password"
-                        value={formik.values.password}
+                        value={formik.values.email || ''}
                         variant="outlined"
                     />
 
+                    <FormControl fullWidth style={{ marginTop: 15 }}>
+                        <InputLabel id="demo-simple-select-label">Role</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            label='Role'
+                            name='role'
+                            onBlur={formik.handleBlur}
+                            onChange={formik.handleChange}
+                            value={formik.values.role || ''}
+
+                        >
+                            <MenuItem value='admin' >Admin</MenuItem>
+                            <MenuItem value='editor'>Editor</MenuItem>
+                            <MenuItem value='basic' >Basic</MenuItem>
+                        </Select>
+                    </FormControl>
+
+
                     <Box sx={{ py: 2 }}>
+
                         <Button
                             color="primary"
                             disabled={loading}
                             fullWidth
-                            size="large"
+                            size="medium"
                             type="submit"
                             variant="contained"
                         >
-                            Add User
+                            Submit
                         </Button>
                     </Box>
 
@@ -140,4 +166,4 @@ const NewUser = () => {
     )
 }
 
-export default AppWrapper(NewUser);
+export default AppWrapper(UpdateUser);

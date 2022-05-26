@@ -1,0 +1,33 @@
+.newUser{
+    width: 100%;
+    height: 93%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f3f5f6;
+
+    .container{
+        box-shadow: 2px 4px 10px 5px rgba(201, 201, 201, 0.47);
+    }
+}
+.newArticle{
+    width: 100%;
+    height: 93%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f3f5f6;
+
+    .articleContainer{
+        width: 70%;
+        box-shadow: 2px 4px 10px 5px rgba(201, 201, 201, 0.47);
+    }
+}
+.progress{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
