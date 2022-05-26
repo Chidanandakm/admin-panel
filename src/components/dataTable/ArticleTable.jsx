@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 
 import { Link, useNavigate } from 'react-router-dom';
-import { CircularProgress, LinearProgress } from '@mui/material';
+import { LinearProgress } from '@mui/material';
 
 import './datatable.scss'
 import { useDispatch, useSelector } from 'react-redux';
@@ -73,9 +73,8 @@ const ArticleTable = () => {
                 </div>
 
                 <DataGrid
-                    components={{
-                        LoadingOverlay: LinearProgress,
-                    }}
+                    sx={{ fontSize: '15px', textAlign: 'center' }}
+                    components={{ LoadingOverlay: LinearProgress, }}
                     loading={loading}
                     rows={articles}
                     columns={columns.concat(actionColumn)}
@@ -83,6 +82,8 @@ const ArticleTable = () => {
                     rowsPerPageOptions={[1]}
                     getRowId={(row) => row._id}
                     autoPageSize={true}
+                    showColumnRightBorder={true}
+                    showCellRightBorder={true}
                 />
             </div>
         </>

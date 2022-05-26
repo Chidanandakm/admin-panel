@@ -10,6 +10,7 @@ import {
     TextField,
     Typography,
 } from '@mui/material';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { userLogin } from '../../redux/userSlice';
 import './login.scss'
@@ -46,7 +47,7 @@ const Login = () => {
                 .then(({ data }) => {
                     if (data.token) {
                         localStorage.setItem('token', data.token)
-                        navigate('/')
+                        navigate('/users')
                     }
 
                 })

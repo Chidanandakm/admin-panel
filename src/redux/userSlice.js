@@ -93,6 +93,7 @@ const userSlice = createSlice({
     name: "user",
     initialState: initialState,
     reducers: {},
+    middleware: [],
     extraReducers: {
         [getUsers.pending]: (state, action) => {
             state.loading = true;

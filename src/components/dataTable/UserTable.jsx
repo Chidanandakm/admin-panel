@@ -9,10 +9,7 @@ import { LinearProgress } from '@mui/material';
 
 
 
-
-
-
-const Datatable = () => {
+const UserTable = () => {
     const { users, user, loading } = useSelector(state => state.user);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -56,7 +53,8 @@ const Datatable = () => {
             )
         }
     },]
-    console.log(users);
+
+
     return (
         <div className='datatable'>
             <div className="data__table__title">
@@ -66,6 +64,7 @@ const Datatable = () => {
                 </Link>
             </div>
             <DataGrid
+                sx={{ fontSize: '18px' }}
                 components={{
                     LoadingOverlay: LinearProgress,
                 }}
@@ -73,11 +72,13 @@ const Datatable = () => {
                 rows={users}
                 columns={columns.concat(actionColumn)}
                 pageSize={10}
-                rowsPerPageOptions={[1]}
+                rowsPerPageOptions={[10]}
                 getRowId={(row) => row._id}
+                showColumnRightBorder={true}
+                showCellRightBorder={true}
             />
         </div>
     )
 }
 
-export default Datatable
+export default UserTable;

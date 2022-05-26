@@ -1,5 +1,5 @@
 import React from 'react'
-import AppWrapper from '../../wrapper/AppWrapper'
+import AppWrapper from '../wrapper/AppWrapper'
 
 const UpdateCategory = () => {
     return (

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Navbar, Sidebar } from '../components';
+import { Navbar, Sidebar } from '../../components';
 import './wrap.scss'
 
 const AppWrapper = (Component) => function HOC() {

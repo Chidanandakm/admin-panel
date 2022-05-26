@@ -11,7 +11,7 @@ import {
     Typography
 } from '@mui/material';
 
-import AppWrapper from '../../wrapper/AppWrapper'
+import AppWrapper from '../wrapper/AppWrapper'
 import './new.scss'
 import { useDispatch, useSelector } from 'react-redux';
 import { createUser } from '../../redux/userSlice';

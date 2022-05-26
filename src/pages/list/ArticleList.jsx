@@ -1,8 +1,6 @@
 import React from 'react';
-import { ArticleTable, Datatable } from '../../components';
-import AppWrapper from '../../wrapper/AppWrapper';
-
-// import './list.scss';
+import { ArticleTable } from '../../components';
+import AppWrapper from '../wrapper/AppWrapper';
 
 const List = () => {
     return (

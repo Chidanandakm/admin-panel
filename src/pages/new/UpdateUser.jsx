@@ -14,7 +14,7 @@ import {
     TextField,
     Typography
 } from '@mui/material';
-import AppWrapper from '../../wrapper/AppWrapper'
+import AppWrapper from '../wrapper/AppWrapper'
 import './new.scss'
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser, updateUser } from '../../redux/userSlice';
@@ -42,7 +42,7 @@ const UpdateUser = () => {
                     setInitialData({ id: data._id, name: data.name, email: data.email, role: data.role })
                 })
         }
-    }, [])
+    }, [location])
 
     const formik = useFormik({
         initialValues: initialData,
