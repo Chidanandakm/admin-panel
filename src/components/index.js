@@ -8,6 +8,7 @@ import UserTable from "./dataTable/UserTable";
 import ArticleTable from "./dataTable/ArticleTable";
 import CategoryTable from "./dataTable/CategoryTable";
 import Loading from "./loading/Loading";
+import AppWrapper from "./wrapper/AppWrapper";
 
 
-export { Navbar, Loading, Sidebar, Widget, Featured, Chart, Table, UserTable, ArticleTable, CategoryTable };
+export { Navbar, AppWrapper, Loading, Sidebar, Widget, Featured, Chart, Table, UserTable, ArticleTable, CategoryTable };

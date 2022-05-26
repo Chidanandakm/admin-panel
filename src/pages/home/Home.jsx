@@ -1,6 +1,5 @@
 import React from 'react';
-import { Chart, Featured, Table, Widget } from '../../components';
-import AppWrapper from '../wrapper/AppWrapper';
+import { AppWrapper, Chart, Featured, Table, Widget } from '../../components';
 
 import './home.scss';
 

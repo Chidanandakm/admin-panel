@@ -1,5 +1,6 @@
 import React from 'react';
-import AppWrapper from '../wrapper/AppWrapper';
+import { AppWrapper } from '../../components';
+
 import './profile.scss'
 const Profile = () => {
     return (

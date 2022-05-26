@@ -1,6 +1,5 @@
 import React from 'react';
-import { ArticleTable } from '../../components';
-import AppWrapper from '../wrapper/AppWrapper';
+import { AppWrapper, ArticleTable } from '../../components';
 
 const List = () => {
     return (

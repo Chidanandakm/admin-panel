@@ -17,10 +17,10 @@ import {
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
-import AppWrapper from '../wrapper/AppWrapper'
 import { useDispatch, useSelector } from 'react-redux';
 import { getArticle, updateArticle } from '../../redux/articleSlice';
 import './new.scss'
+import { AppWrapper } from '../../components';
 
 
 const NewArticle = () => {

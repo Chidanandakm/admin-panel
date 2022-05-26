@@ -1,6 +1,5 @@
 import React from 'react';
-import { UserTable } from '../../components';
-import AppWrapper from '../wrapper/AppWrapper';
+import { AppWrapper, UserTable } from '../../components';
 
 // import './list.scss';
 

@@ -1,6 +1,5 @@
 import React from 'react'
-import { CategoryTable } from '../../components'
-import AppWrapper from '../wrapper/AppWrapper'
+import { AppWrapper, CategoryTable } from '../../components'
 
 const CategoryList = () => {
     return (

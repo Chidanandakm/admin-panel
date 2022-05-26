@@ -14,10 +14,11 @@ import {
     TextField,
     Typography
 } from '@mui/material';
-import AppWrapper from '../wrapper/AppWrapper'
+
 import './new.scss'
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser, updateUser } from '../../redux/userSlice';
+import { AppWrapper } from '../../components';
 
 const UpdateUser = () => {
     const { loading } = useSelector(state => state.user);
