@@ -14,8 +14,8 @@ function App() {
   const { isLoggedIn } = useSelector((state) => state.user);
 
   return (
-    <Suspense fallback={<Loading />}>
-      <BrowserRouter>
+    <BrowserRouter>
+      <Suspense fallback={<Loading />}>
         <Routes>
           <Route path='/'  >
             <Route path='login' element={<Login />} />
@@ -38,8 +38,8 @@ function App() {
             </Route>
           </Route>
         </Routes>
-      </BrowserRouter>
-    </Suspense>
+      </Suspense>
+    </BrowserRouter>
   );
 }
 
