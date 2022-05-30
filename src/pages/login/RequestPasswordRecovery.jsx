@@ -1,32 +1,30 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useFormik } from 'formik';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import {
     Box,
     Button,
     CircularProgress,
     Container,
-    Grid,
     TextField,
     Typography,
-
 } from '@mui/material';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { userLogin } from '../../redux/userSlice';
 import './login.scss'
+import { requestResetPassword } from '../../redux/userSlice';
 
-const Login = () => {
-    const { error, loading } = useSelector(state => state.user);
+const RequestPasswordRecovery = () => {
+    const { loading } = useSelector(state => state.user);
     const dispatch = useDispatch()
-    const navigate = useNavigate();
 
+    const [success, setSuccess] = useState('');
+    const [error, setError] = useState('');
 
     const formik = useFormik({
         initialValues: {
-            email: 'test@gmail.com',
-            password: '123456',
+            email: '',
         },
         validationSchema: Yup.object({
             email: Yup
@@ -36,44 +34,43 @@ const Login = () => {
                 .max(255)
                 .required(
                     'Email is required'),
-            password: Yup
-                .string()
-                .min(6, 'Password must be at least 6 characters')
-                .max(255)
-                .required(
-                    'Password is required'),
         }),
         onSubmit: (values) => {
-            dispatch(userLogin(values))
+            dispatch(requestResetPassword(values))
                 .unwrap()
                 .then(({ data }) => {
-                    if (data.token) {
-                        localStorage.setItem('token', data.token)
-                        navigate('/users')
-                    }
-
+                    setSuccess(data);
+                    setError('')
                 })
-                .catch(err => console.log(err))
+                .catch(({ data }) => { setError(data.message); setSuccess('') })
         }
     });
     return (
         <div className='form'>
             {loading ? <CircularProgress /> : <Container maxWidth="xs" className='container' >
                 <form onSubmit={formik.handleSubmit}>
-                    <Box sx={{ my: 3, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Box sx={{ my: 2, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <Typography
                             color="textSecondary"
                             variant="h5"
                         >
-                            Sign In to your account
+                            Request Password Recovery
                         </Typography>
                     </Box>
-                    {error?.message && <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', }}>
+                    {error && <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', }}>
                         <Typography
                             color="red"
                             variant="h6"
                         >
-                            {error?.message}
+                            {error}
+                        </Typography>
+                    </Box>}
+                    {success?.message && <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', }}>
+                        <Typography
+                            color="green"
+                            variant="h6"
+                        >
+                            {success?.message}
                         </Typography>
                     </Box>}
                     <TextField
@@ -89,27 +86,8 @@ const Login = () => {
                         value={formik.values.email}
                         variant="outlined"
                     />
-                    <TextField
-                        error={Boolean(formik.touched.password && formik.errors.password)}
-                        fullWidth
-                        helperText={formik.touched.password && formik.errors.password}
-                        label="Password"
-                        margin="normal"
-                        name="password"
-                        onBlur={formik.handleBlur}
-                        onChange={formik.handleChange}
-                        type="password"
-                        value={formik.values.password}
-                        variant="outlined"
-                    />
-                    <Box sx={{ py: 1 }}>
-                        <Grid container style={{ marginBottom: 10 }} >
-                            <Grid item xs>
-                                <Link to={'/forgot-password'}>
-                                    <span>Forgot password?</span>
-                                </Link>
-                            </Grid>
-                        </Grid>
+
+                    <Box sx={{ py: 2 }}>
                         <Button
                             color="primary"
                             disabled={loading}
@@ -118,9 +96,8 @@ const Login = () => {
                             type="submit"
                             variant="contained"
                         >
-                            Login
+                            Submit
                         </Button>
-
                     </Box>
                 </form>
             </Container>}
@@ -128,4 +105,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default RequestPasswordRecovery;

@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 import { useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { HashRouter, Navigate } from "react-router-dom";
 import {
   BrowserRouter,
   Routes,
@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import { Loading } from "./components";
 
-import { ArticleList, CategoryList, EditArticle, Home, List, Login, NewArticle, NewCategory, NewUser, Profile, UpdateCategory, UpdateUser } from "./pages";
+import { ArticleList, CategoryList, EditArticle, Home, List, Login, NewArticle, NewCategory, NewUser, Profile, RequestPasswordRecovery, ResetPassword, UpdateCategory, UpdateUser } from "./pages";
 
 function App() {
   const { isLoggedIn } = useSelector((state) => state.user);
@@ -17,8 +17,13 @@ function App() {
     <BrowserRouter>
       <Suspense fallback={<Loading />}>
         <Routes>
-          <Route path='/'  >
+          <Route path='/' exact >
             <Route path='login' element={<Login />} />
+            <Route path='forgot-password' element={<RequestPasswordRecovery />} />
+            <Route path='reset-password'>
+              <Route path=':token' element={<ResetPassword />} />
+            </Route>
+
             <Route index element={isLoggedIn ? <Home /> : <Navigate to={'/login'} />} />
             <Route path="users">
               <Route index element={isLoggedIn ? <List /> : <Navigate to={'/login '} />} />

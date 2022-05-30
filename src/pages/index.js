@@ -12,7 +12,9 @@ const EditArticle = React.lazy(() => import("./new/EditArticle"));
 const CategoryList = React.lazy(() => import("./list/CategoryList"));
 const NewCategory = React.lazy(() => import("./new/NewCategory"));
 const UpdateCategory = React.lazy(() => import("./new/UpdateCategory"));
+const RequestPasswordRecovery = React.lazy(() => import("./login/RequestPasswordRecovery"));
+const ResetPassword = React.lazy(() => import("./login/ResetPassword"));
 
 
 
-export { Home, List, NewArticle, EditArticle, CategoryList, NewCategory, UpdateCategory, Login, UpdateUser, Single, NewUser, Profile, ArticleList };
+export { Home, List, NewArticle, RequestPasswordRecovery, ResetPassword, EditArticle, CategoryList, NewCategory, UpdateCategory, Login, UpdateUser, Single, NewUser, Profile, ArticleList };

@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const API = axios.create({ baseURL: "https://admin-app-bakend.herokuapp.com/" });
+// export const API = axios.create({ baseURL: "http://localhost:5000/" });
 
 API.interceptors.request.use((request) => {
     request.headers.Authorization = `Bearer ${localStorage.getItem(
@@ -82,6 +83,26 @@ export const createUser = createAsyncThunk('account/createUser', async (data, { 
 export const deleteUser = createAsyncThunk('account/deleteUser', async (data, { rejectWithValue }) => {
     try {
         return await API.delete(`/users/${data}`);
+
+    } catch (error) {
+        return rejectWithValue(error.response);
+
+    }
+})
+
+export const requestResetPassword = createAsyncThunk('account/requestResetPassword', async (data, { rejectWithValue }) => {
+    try {
+        return await API.post(`/users/request-reset-password`, data);
+
+    } catch (error) {
+        return rejectWithValue(error.response);
+
+    }
+})
+
+export const resetPassword = createAsyncThunk('account/resetPassword', async (data, { rejectWithValue }) => {
+    try {
+        return await API.post(`/users/reset-password/${data.token}`, data);
 
     } catch (error) {
         return rejectWithValue(error.response);
@@ -175,8 +196,29 @@ const userSlice = createSlice({
         },
         [updateUser.rejected]: (state, action) => {
             state.loading = false;
-        }
+        },
 
+        [requestResetPassword.pending]: (state, action) => {
+            state.loading = true;
+        },
+        [requestResetPassword.fulfilled]: (state, action) => {
+            state.loading = false;
+        },
+        [requestResetPassword.rejected]: (state, action) => {
+            state.loading = false;
+            state.error = action.payload.data;
+        },
+
+        [resetPassword.pending]: (state, action) => {
+            state.loading = true;
+        },
+        [resetPassword.fulfilled]: (state, action) => {
+            state.loading = false;
+        },
+        [resetPassword.rejected]: (state, action) => {
+            state.loading = false;
+            state.error = action.payload.data;
+        },
 
 
 
