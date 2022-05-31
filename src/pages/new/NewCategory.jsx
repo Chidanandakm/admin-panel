@@ -19,7 +19,7 @@ import { AppWrapper } from '../../components';
 import { createCategory } from '../../redux/categorySlice';
 
 const NewCategory = () => {
-    const { loading } = useSelector(state => state.user)
+    const { loading } = useSelector(state => state.category)
     const dispatch = useDispatch()
     const navigate = useNavigate();
 
