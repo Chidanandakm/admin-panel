@@ -3,7 +3,7 @@ import { AppWrapper, CategoryTable } from '../../components'
 
 const CategoryList = () => {
     return (
-        <div><CategoryTable /></div>
+        <CategoryTable />
     )
 }
 

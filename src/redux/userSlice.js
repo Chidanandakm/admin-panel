@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const API = axios.create({ baseURL: "https://admin-app-bakend.herokuapp.com/" });
-// export const API = axios.create({ baseURL: "http://localhost:5000/" });
+// export const API = axios.create({ baseURL: "https://admin-app-bakend.herokuapp.com/" });
+export const API = axios.create({ baseURL: "http://localhost:5000/" });
 
 API.interceptors.request.use((request) => {
     request.headers.Authorization = `Bearer ${localStorage.getItem(

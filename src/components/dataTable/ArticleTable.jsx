@@ -15,6 +15,7 @@ const ArticleTable = () => {
     const { articles, loading } = useSelector(state => state.article);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    console.log(articles);
 
     useEffect(() => {
         dispatch(getArticles());

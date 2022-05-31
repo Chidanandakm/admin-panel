@@ -49,7 +49,6 @@ const NewArticle = () => {
             dispatch(getArticle(id))
                 .unwrap()
                 .then(({ data }) => {
-                    console.log(data.article);
                     setInitialData({ ...data.article, id: data.article._id, content: data.article.content.toString(), })
                 })
                 .catch(err => {

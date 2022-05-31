@@ -27,6 +27,8 @@ const ResetPassword = () => {
     const { token } = useParams()
     const [initialData, setInitialData] = useState({});
     const [showPassword, setShowPassword] = useState(false);
+    const [success, setSuccess] = useState('');
+
 
     useEffect(() => {
         setInitialData({
@@ -51,7 +53,8 @@ const ResetPassword = () => {
             dispatch(resetPassword(values))
                 .unwrap()
                 .then(({ data }) => {
-                    console.log(data);
+                    setSuccess(data);
+
                     setTimeout(() => {
                         data.message === 'Password reset successfully' && navigate('/login')
                     }, 1000);
@@ -78,6 +81,14 @@ const ResetPassword = () => {
                             variant="h6"
                         >
                             {error?.message}
+                        </Typography>
+                    </Box>}
+                    {success?.message && <Box sx={{ marginBottom: 2, display: 'flex', alignItems: 'center', justifyContent: 'center', }}>
+                        <Typography
+                            color="green"
+                            variant="h6"
+                        >
+                            {success?.message}
                         </Typography>
                     </Box>}
 
